@@ -1,1 +1,64 @@
-...
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int eh_vogal(char c) {
+    c = tolower(c);
+    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
+}
+
+int eh_consoante(char c) {
+    c = tolower(c);
+    return ((c >= 'a' && c <= 'z') && !eh_vogal(c));
+}
+
+void inverter_string(char *str) {
+    int i, j;
+    char temp;
+    int len = strlen(str);
+    for(i = 0, j = len - 1; i < j; i++, j--) {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+    }
+}
+
+int main() {
+    char Matriz[3][3][50];
+    char Matriz_Modificada[3][3][50];
+
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            printf("Digite a string da posição [%d] [%d]: ", i, j);
+            scanf("%49s", Matriz[i][j]);
+        }
+    }
+
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            strcpy(Matriz_Modificada[i][j], Matriz[i][j]);
+            int len = strlen(Matriz[i][j]);
+            if (len > 0 && eh_vogal(Matriz[i][j][0]) && eh_consoante(Matriz[i][j][len-1])) {
+                inverter_string(Matriz_Modificada[i][j]);
+            }
+        }
+    }
+
+    printf("\nMatriz original:\n");
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            printf("[%d][%d]: %s\t", i, j, Matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nMatriz Modificada:\n");
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            printf("[%d][%d]: %s\t", i, j, Matriz_Modificada[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
